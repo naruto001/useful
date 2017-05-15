@@ -1,0 +1,226 @@
+<!DOCTYPE   html>
+<html   lang='en'>
+    <head>
+        <meta   charset='utf-8'/>
+        <title>turn</title>
+        <style>
+
+            body,ul,p,h1,h2,h3,h4,h5,h6,form,dl,dd,select,input,textarea {
+                margin:0;
+                padding:0;
+                font-family:"宋体";
+   
+            }
+            li {
+                list-style-type:none;
+            }
+            img {
+                border:none;
+            }
+            a {
+                text-decoration:none;
+            }
+            
+            #wrap {
+                width:300px;
+                margin:20px auto;
+                border:1px solid #ccc;
+            }
+            #top {
+                width:100%;
+            }
+            #top li {
+                height:30px;
+                line-height:30px;
+                border-bottom:1px dashed #ccc;
+            }
+            #top .weight {
+                float:right;
+                margin-right:30px;
+            }
+            .clear {
+                content:'';
+                display:block;
+                clear:both;
+            }
+            #bottom {
+                width:100%;
+                border:1px solid #ccc;
+                border-top:0;
+                height:50px;
+                text-align:center;
+            }
+            #bottom li {
+                float:left;
+                height:50px;
+                line-height:50px;
+                font-size:20px;
+                font-weight:bold;
+            }
+            #save,#add,#delete {
+                height:30px;
+                line-height:30px;
+                background:#ccc;
+                border-radius:5px;
+                color:#fff;
+                margin-top:10px;
+                padding:0px 2px;
+            }
+            #save {
+                margin:10px 30px 0px 20px;
+            }
+            #add {
+                margin-left:20px;
+            }
+            #delete {
+                margin-left:10px;
+            }
+        </style>
+        <script>
+            window.onload = function () {
+                var oTop = document.getElementById('top');
+                var aLi = oTop.getElementsByTagName('li');
+                var arrCor = ['#FFEBFF','#fff'];
+                var aInt = oTop.getElementsByTagName('input');
+                var flag = 0; 
+                var oBottom = document.getElementById('bottom');
+                var aBtn = oBottom.getElementsByTagName('div');
+                var num;
+                var oInt = oBottom.getElementsByTagName('input')[0];
+                var str;
+                
+                
+                
+                
+                //隔行设置背景颜色
+                for(var i=0; i<aLi.length; i++) {
+                    aLi[i].style.background = arrCor[i%arrCor.length]; 
+                }
+                
+                //鼠标滑动变色
+                for(var i=0; i<aLi.length; i++) {
+                    aLi[i].index = i;
+                    aLi[i].onmouseover = function () {
+                        this.style.background = '#ccc';
+                    }
+                    aLi[i].onmouseout = function () {
+                        if(!aInt[this.index].checked) {
+                           this.style.background = arrCor[this.index%2];
+                        }
+                    }
+                }
+                
+                
+                //点击input时发生的一系列变化效果
+                for(var i=0; i<aInt.length; i++) {
+                    aInt[i].index = i;
+                    aInt[i].onclick = function () {
+                        //当点击了所有input时，底部all会被选中
+                        flag = 0;
+                        num = this.index;
+                        for(var i=0; i<aInt.length; i++) {
+                            flag += Number(aInt[i].checked);
+                        }
+                        if(flag==aInt.length) {
+                            oInt.checked = true;
+                        }else {
+                            oInt.checked = false;
+                        }
+                        
+                        //点击input时，底部div透明度变大
+                        if(!flag) {
+                            for(var j=0; j<aBtn.length; j++) {
+                                aBtn[j].style.opacity = '0.2';
+                            }
+                        }else {
+                            for(var j=0; j<aBtn.length; j++) {
+                                aBtn[j].style.opacity = '1';
+                            }
+                        }
+                        
+                        if(this.checked) {
+                            aLi[num].style.background = '#ccc';
+                        }else {
+                            aLi[num].style.background = arrCor[num%2];
+                        }
+                        
+                        
+                        //点击all进行全选或者取消全选，并变色
+                        oInt.onclick = function () {
+                            if(!this.checked) {
+                                for(var i=0; i<aInt.length; i++) {
+                                    aInt[i].checked = false;
+                                    aLi[i].style.background = arrCor[i%2];
+                                }
+                                for(var i=0; i<aBtn.length; i++) {
+                                    aBtn[i].style.opacity = '0.2';
+                                }
+                            }else {
+                                for(var i=0; i<aInt.length; i++) {
+                                    aInt[i].checked = true;
+                                    aLi[i].style.background = '#ccc';
+                                }
+                                for(var i=0; i<aBtn.length; i++) {
+                                    aBtn[i].style.opacity = '1';
+                                }
+                            }
+                        }
+                        
+                    }
+                }
+              
+                
+            }
+        </script>
+    </head>
+    <body>
+        <div    id='wrap'>
+            <ul id='top'>
+                <li class='clear'>
+                    <input  type='checkbox'/>
+                    <span>class01<span>
+                    <span   class='weight'>100kg</span>
+                </li>
+                <li class='clear'>
+                    <input  type='checkbox'/>
+                    <span>class02</span>
+                    <span   class='weight'>200kg</span>
+                </li>
+                <li class='clear'>
+                    <input  type='checkbox'/>
+                    <span>class03</span>
+                    <span   class='weight'>230kg</span>
+                </li>
+                <li class='clear'>
+                    <input  type='checkbox'/>
+                    <span>class03</span>
+                    <span   class='weight'>440kg</span>
+                </li>
+                <li class='clear'>
+                    <input  type='checkbox'/>
+                    <span>class04</span>
+                    <span   class='weight'>670kg</span>
+                </li>
+                <li class='clear'>
+                    <input  type='checkbox'/>
+                    <span>class05</span>
+                    <span   class='weight'>910kg</span>
+                </li>
+            </ul>
+            <ul id='bottom' class='clear'>
+                <li>
+                    <input  type='checkbox'/>all
+                </li>
+                <li>
+                    <div    id='save'>save</div>
+                </li>
+                <li>
+                    <div    id='delete'>delete</div>
+                </li>
+                <li>
+                    <div    id='add'>add</div>
+                </li>
+            </ul>
+        </div>
+    </body>
+</html>
